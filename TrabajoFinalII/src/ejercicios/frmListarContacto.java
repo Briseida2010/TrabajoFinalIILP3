@@ -119,12 +119,11 @@ public class frmListarContacto extends javax.swing.JFrame {
                     p.getCelular(), p.getEmail(), p.getSexo(), p.getTipoPersona(), p.getEstado(),
                     p.getDia() + "/" + p.getMes() + "/" + p.getAnio()
                 });
-                
+                System.out.println(p.getCodigo());
             }
         }
       tablaRegistrar.setModel(modelo);
-    
-    }
+ }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -175,19 +174,20 @@ public class frmListarContacto extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(19, 19, 19)
-                .addComponent(jLabel1)
-                .addGap(65, 65, 65)
-                .addComponent(rbCodigo)
-                .addGap(34, 34, 34)
-                .addComponent(rbNombre)
-                .addGap(18, 18, 18)
-                .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(11, Short.MAX_VALUE))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1)
-                .addContainerGap())
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(19, 19, 19)
+                        .addComponent(jLabel1)
+                        .addGap(65, 65, 65)
+                        .addComponent(rbCodigo)
+                        .addGap(34, 34, 34)
+                        .addComponent(rbNombre)
+                        .addGap(18, 18, 18)
+                        .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 461, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -243,7 +243,7 @@ public class frmListarContacto extends javax.swing.JFrame {
                 btnMostrarCumpleañosMesActionPerformed(evt);
             }
         });
-        getContentPane().add(btnMostrarCumpleañosMes, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 360, 190, 30));
+        getContentPane().add(btnMostrarCumpleañosMes, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 360, 220, 30));
         getContentPane().add(txtMostrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 360, 130, 30));
 
         rbMes.setText("Mes");
@@ -312,7 +312,6 @@ public class frmListarContacto extends javax.swing.JFrame {
         if(rbMes.isSelected())
         {
         mostrarPorMes(txtMostrar.getText());
-        cargarDatos();
         }
                 
     }//GEN-LAST:event_btnMostrarCumpleañosMesActionPerformed

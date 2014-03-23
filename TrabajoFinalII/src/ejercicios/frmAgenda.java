@@ -6,6 +6,7 @@
 
 package ejercicios;
 import java.util.ArrayList;
+import java.util.HashSet;
 /**
  *
  * @author azteca
@@ -14,12 +15,42 @@ import java.util.ArrayList;
 
 public class frmAgenda extends javax.swing.JFrame {
 
-   private ArrayList<clsPersona>lstPersonas;
+   private ArrayList<clsPersona>lstPersonas = new ArrayList<clsPersona>();
    
     public frmAgenda() {
        initComponents();
         setLocationRelativeTo(null);
         lstPersonas = new ArrayList<clsPersona>();
+        cargarPersona();
+    }
+    
+    private void cargarPersona(){
+        clsPersona p = new clsPersona();
+        p.setAnio("1990");
+        p.setCelular("7878123");
+        p.setCodigo(5);
+        p.setDia("18");
+        p.setEmail("email");
+        p.setEstado('A');
+        p.setMes("1");
+        p.setNombre("Charlie");
+        p.setSexo('M');
+        p.setTelefonoFijo("23432432");
+        p.setTipoPersona("Alumno");
+        lstPersonas.add(p);
+        clsPersona pe = new clsPersona();
+        pe.setAnio("1890");
+        pe.setCelular("6568123");
+        pe.setCodigo(10);
+        pe.setDia("15");
+        pe.setEmail("email");
+        pe.setEstado('I');
+        pe.setMes("3");
+        pe.setNombre("Juan");
+        pe.setSexo('F');
+        pe.setTelefonoFijo("872345");
+        pe.setTipoPersona("Docente");
+        lstPersonas.add(pe);
     }
 
     /**
