@@ -1,0 +1,1 @@
+~prod:2*nomb:arroz*stoc:2*prec:2.4*~
