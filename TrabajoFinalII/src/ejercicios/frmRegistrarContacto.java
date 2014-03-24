@@ -14,21 +14,20 @@ import javax.swing.JOptionPane;
  */
 public class frmRegistrarContacto extends javax.swing.JFrame {
 
-  
-    private ArrayList<clsPersona> lstPersonas;
+    private frmListarContacto formularioListarContacto;
     
-    public frmRegistrarContacto(ArrayList<clsPersona> lstPersonas) {
+    public frmRegistrarContacto(frmListarContacto formulario) {
         initComponents();
+        cargarRadioButtons();
         setLocationRelativeTo(null); 
-        this.lstPersonas = lstPersonas;
+        this.formularioListarContacto = formulario;
     }
-    
-  
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         buttonGroup1 = new javax.swing.ButtonGroup();
+        buttonGroup2 = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -155,42 +154,46 @@ public class frmRegistrarContacto extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
-       
-       //clsPersona p = new clsPersona();
-       int codigo = Integer.parseInt(txtCodigo.getText());
-       String nombre = txtNombre.getText();
-       String telefonoFijo = txtTelefonoFijo.getText();
-       String celular = txtCelular.getText();
-       String email = txtEmail.getText();
-        char sexo = ' ';
-        if(rbFemenina.isSelected())
+    private void cargarRadioButtons(){
+        buttonGroup1.add(rbActivo);
+        buttonGroup1.add(rbInactivo);
+        buttonGroup2.add(rbFemenina);
+        buttonGroup2.add(rbMasculino);
+    }
+    
+    private clsPersona asignarValoresContacto(){
+       clsPersona p = new clsPersona();
+       p.setCodigo(Integer.parseInt(txtCodigo.getText()));
+       p.setNombre(txtNombre.getText());
+       p.setTelefonoFijo(txtTelefonoFijo.getText());
+       p.setCelular(txtCelular.getText());
+       p.setEmail(txtEmail.getText());
+       if(rbFemenina.isSelected())
         {
-        sexo='F';
+        p.setSexo('F');
         }else{
-        sexo='M';
+        p.setSexo('M');
         }
-        /*contacto.getFechaNacimiento(spinnerDia.getValue().toString(),
-                spinnerMes.getValue().toString(),
-                spinnerAnio.getValue().toString());*/
-        String dia = spinnerDia.getValue().toString();
-        String mes = spinnerMes.getValue().toString();
-        String anio = spinnerAnio.getValue().toString();
+        p.setDia(spinnerDia.getValue().toString());
+        p.setMes(spinnerMes.getValue().toString());
+        p.setAnio(spinnerAnio.getValue().toString());
+        p.setTipoPersona(cmbTipoPersona.getSelectedItem().toString());
         
-        String tipoPersona = cmbTipoPersona.getSelectedItem().toString();
-        
-        char estado=' ';
         if(rbActivo.isSelected())
         {
-        estado='A';
+        p.setEstado('A');
         }else{
-        estado='I';
+        p.setEstado('I');
         }
-        lstPersonas.add(new clsPersona(codigo, nombre, telefonoFijo,celular,email,sexo,tipoPersona,estado,dia,
-                mes,anio));
-       
-        JOptionPane.showMessageDialog(null, "SE REGISTRO CORRECTAMENTE!");   
+        return p;
+    }
+    
+    private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
+        clsPersona p = asignarValoresContacto();
+        formularioListarContacto.lstPersonas.add(p);
+        formularioListarContacto.cargarDatos();
+        JOptionPane.showMessageDialog(null, "SE REGISTRO CORRECTAMENTE!");
+        this.dispose();
     }//GEN-LAST:event_btnRegistrarActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -198,37 +201,26 @@ public class frmRegistrarContacto extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void rbFemeninaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbFemeninaActionPerformed
-       if(rbFemenina.isSelected())
-       {
-       rbMasculino.setSelected(false);
-       }
+       
     }//GEN-LAST:event_rbFemeninaActionPerformed
 
     private void rbMasculinoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbMasculinoActionPerformed
-        if(rbMasculino.isSelected())
-        {
-        rbFemenina.setSelected(false);
-        }
+        
     }//GEN-LAST:event_rbMasculinoActionPerformed
 
     private void rbActivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbActivoActionPerformed
-       if(rbActivo.isSelected())
-       {
-       rbInactivo.setSelected(false);
-       }
+       
     }//GEN-LAST:event_rbActivoActionPerformed
 
     private void rbInactivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbInactivoActionPerformed
-       if(rbInactivo.isSelected())
-       {
-       rbActivo.setSelected(false);
-       }
+       
     }//GEN-LAST:event_rbInactivoActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnRegistrar;
     private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.ButtonGroup buttonGroup2;
     private javax.swing.JComboBox cmbTipoPersona;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;

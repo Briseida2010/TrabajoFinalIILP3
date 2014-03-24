@@ -18,19 +18,24 @@ public class frmListarContacto extends javax.swing.JFrame {
     /**
      * Creates new form frmListarContacto
      */
-    private ArrayList<clsPersona> lstPersonas;
+    public ArrayList<clsPersona> lstPersonas;
 
     public frmListarContacto(ArrayList<clsPersona> lstPersonas) {
         initComponents();
         setLocationRelativeTo(null);
         this.lstPersonas = lstPersonas;
         cargarDatos();
-        
+        cargarRadioButtons();
     }
 
-    public void cargarDatos() {
+    private void cargarRadioButtons() {
+        buttonGroup1.add(rbCodigo);
+        buttonGroup1.add(rbNombre);
+    }
+       
+    private DefaultTableModel crearCabecerasTabla(){
         DefaultTableModel modelo = new DefaultTableModel();
-        modelo.addColumn("codigo");
+        modelo.addColumn("Codigo");
         modelo.addColumn("nombre");
         modelo.addColumn("telefonoFijo");
         modelo.addColumn("celular");
@@ -39,87 +44,50 @@ public class frmListarContacto extends javax.swing.JFrame {
         modelo.addColumn("tipoPersona");
         modelo.addColumn("estado");
         modelo.addColumn("fechaNacimiento");
-
-        for (clsPersona p : lstPersonas) {
-
-            modelo.addRow(new Object[]{p.getCodigo(), p.getNombre(), p.getTelefonoFijo(),
+        return modelo;
+    }
+    
+    private void crearFila(clsPersona p,DefaultTableModel modelo){
+        modelo.addRow(new Object[]{p.getCodigo(), p.getNombre(), p.getTelefonoFijo(),
                 p.getCelular(), p.getEmail(), p.getSexo(), p.getTipoPersona(), p.getEstado(),
                 p.getDia() + "/" + p.getMes() + "/" + p.getAnio()
             });
+    }
+    
+    public void cargarDatos() {
+        DefaultTableModel modelo = crearCabecerasTabla();
+        for (clsPersona p : lstPersonas) {
+            crearFila(p,modelo);
         }
         tablaRegistrar.setModel(modelo);
-
     }
 
     public void buscarPorCodigo(String codigo) {
-        DefaultTableModel modelo = new DefaultTableModel();
-        modelo.addColumn("codigo");
-        modelo.addColumn("nombre");
-        modelo.addColumn("telefonoFijo");
-        modelo.addColumn("celular");
-        modelo.addColumn("email");
-        modelo.addColumn("sexo");
-        modelo.addColumn("tipoPersona");
-        modelo.addColumn("estado");
-        modelo.addColumn("fechaNacimiento");
-
+        DefaultTableModel modelo = crearCabecerasTabla();
         for (clsPersona p : lstPersonas) {
             if (p.getCodigo() == Integer.parseInt(codigo)) {
-                modelo.addRow(new Object[]{p.getCodigo(), p.getNombre(), p.getTelefonoFijo(),
-                    p.getCelular(), p.getEmail(), p.getSexo(), p.getTipoPersona(), p.getEstado(),
-                    p.getDia() + "/" + p.getMes() + "/" + p.getAnio()
-                });
+               crearFila(p,modelo);
             }
         }
         tablaRegistrar.setModel(modelo); 
-
     }
 
     public void buscarPorNombre(String nombre) {
-
-        DefaultTableModel modelo = new DefaultTableModel();
-        modelo.addColumn("codigo");
-        modelo.addColumn("nombre");
-        modelo.addColumn("telefonoFijo");
-        modelo.addColumn("celular");
-        modelo.addColumn("email");
-        modelo.addColumn("sexo");
-        modelo.addColumn("tipoPersona");
-        modelo.addColumn("estado");
-        modelo.addColumn("fechaNacimiento");
-
+        DefaultTableModel modelo = crearCabecerasTabla();
         for (clsPersona p : lstPersonas) {
             if (p.getNombre().equals(nombre)) {
-                modelo.addRow(new Object[]{p.getCodigo(), p.getNombre(), p.getTelefonoFijo(),
-                    p.getCelular(), p.getEmail(), p.getSexo(), p.getTipoPersona(), p.getEstado(),
-                    p.getDia() + "/" + p.getMes() + "/" + p.getAnio()
-                });
-                
+                crearFila(p,modelo);
             }
         }
-      tablaRegistrar.setModel(modelo);
-
+        tablaRegistrar.setModel(modelo);
     }
+    
     public void mostrarPorMes(String mes)
     {
-        DefaultTableModel modelo = new DefaultTableModel();
-        modelo.addColumn("codigo");
-        modelo.addColumn("nombre");
-        modelo.addColumn("telefonoFijo");
-        modelo.addColumn("celular");
-        modelo.addColumn("email");
-        modelo.addColumn("sexo");
-        modelo.addColumn("tipoPersona");
-        modelo.addColumn("estado");
-        modelo.addColumn("fechaNacimiento");
-
+        DefaultTableModel modelo = crearCabecerasTabla();
         for (clsPersona p : lstPersonas) {
             if (p.getMes().equals(mes)) {
-                modelo.addRow(new Object[]{p.getCodigo(), p.getNombre(), p.getTelefonoFijo(),
-                    p.getCelular(), p.getEmail(), p.getSexo(), p.getTipoPersona(), p.getEstado(),
-                    p.getDia() + "/" + p.getMes() + "/" + p.getAnio()
-                });
-                System.out.println(p.getCodigo());
+                crearFila(p,modelo);
             }
         }
       tablaRegistrar.setModel(modelo);
@@ -129,6 +97,7 @@ public class frmListarContacto extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttonGroup1 = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tablaRegistrar = new javax.swing.JTable();
@@ -253,9 +222,10 @@ public class frmListarContacto extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
-        frmRegistrarContacto ventana = new frmRegistrarContacto(lstPersonas);
-        ventana.setVisible(true);
-        
+        //this = al formulario abierto
+        // cuando yo instancio una clase se DEBE ejecutar el constructor
+        frmRegistrarContacto ventana = new frmRegistrarContacto(this);
+        ventana.setVisible(true);      
     }//GEN-LAST:event_btnNuevoActionPerformed
 
     private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
@@ -323,6 +293,7 @@ public class frmListarContacto extends javax.swing.JFrame {
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnMostrarCumpleañosMes;
     private javax.swing.JButton btnNuevo;
+    private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;

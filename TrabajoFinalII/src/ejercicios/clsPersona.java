@@ -37,24 +37,6 @@ public class clsPersona {
        // JOptionPane.showMessageDialog(null,"La fecha es " + dia+"/"+mes+"/"+anio);
     }
 
-    public clsPersona(int codigo,String nombre, String telefonoFijo,
-            String celular, String email,char sexo,String tipoPersona,
-            char estado,String dia, String mes,String anio){
-        this.codigo=codigo;
-        this.nombre=nombre;
-        this.telefonoFijo=telefonoFijo;
-        this.celular=celular;
-        this.email=email;
-        this.sexo=sexo;
-        this.tipoPersona=tipoPersona;
-        this.estado=estado;
-        this.dia=dia;
-        this.mes=mes;
-        this.anio=anio;
-    
-    }
-
-
     public int getCodigo() {
         return codigo;
     }
