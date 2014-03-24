@@ -101,6 +101,7 @@
         </Component>
         <Component class="javax.swing.JRadioButton" name="rbCodigo">
           <Properties>
+            <Property name="selected" type="boolean" value="true"/>
             <Property name="text" type="java.lang.String" value="Codigo"/>
           </Properties>
           <Events>
@@ -186,6 +187,7 @@
     </Component>
     <Component class="javax.swing.JRadioButton" name="rbMes">
       <Properties>
+        <Property name="selected" type="boolean" value="true"/>
         <Property name="text" type="java.lang.String" value="Mes"/>
       </Properties>
       <Constraints>

@@ -15,13 +15,51 @@ import javax.swing.JOptionPane;
 public class frmRegistrarContacto extends javax.swing.JFrame {
 
     private frmListarContacto formularioListarContacto;
+    private clsPersona persona = null;
+    private int indice;
     
     public frmRegistrarContacto(frmListarContacto formulario) {
         initComponents();
         cargarRadioButtons();
-        setLocationRelativeTo(null); 
+        setLocationRelativeTo(null);
+        btnRegistrar.setText("Registrar");
         this.formularioListarContacto = formulario;
     }
+    
+    public frmRegistrarContacto(frmListarContacto formulario,clsPersona p,int indice) {
+        initComponents();
+        cargarRadioButtons();
+        setLocationRelativeTo(null); 
+        btnRegistrar.setText("Actualizar");
+        this.formularioListarContacto = formulario;
+        this.indice = indice;
+        persona = p;
+        cargarDatosPersona();
+    }
+    
+    private void cargarDatosPersona(){
+        txtCodigo.setText(String.valueOf(persona.getCodigo()));
+        txtNombre.setText(persona.getNombre());
+        txtTelefonoFijo.setText(persona.getTelefonoFijo());
+        txtCelular.setText(persona.getCelular());
+        txtEmail.setText(persona.getEmail());
+        if(persona.getSexo()=='M'){
+            rbMasculino.setSelected(true);
+        }else{
+            rbFemenina.setSelected(true);
+        }
+        spinnerDia.setValue(new Integer(persona.getDia()));
+        spinnerMes.setValue(new Integer(persona.getMes()));
+        spinnerAnio.setValue(new Integer(persona.getAnio()));
+        cmbTipoPersona.setSelectedItem(persona.getTipoPersona());
+        if(persona.getEstado()=='A'){
+            rbActivo.setSelected(true);
+        }else{
+            rbInactivo.setSelected(true);
+        }
+        
+    }
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -90,6 +128,7 @@ public class frmRegistrarContacto extends javax.swing.JFrame {
         jPanel1.add(txtCelular, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 120, 130, -1));
         jPanel1.add(txtEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 150, 180, -1));
 
+        rbFemenina.setSelected(true);
         rbFemenina.setText("Femenina");
         rbFemenina.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -109,6 +148,7 @@ public class frmRegistrarContacto extends javax.swing.JFrame {
         cmbTipoPersona.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Docente", "Estudiante" }));
         jPanel1.add(cmbTipoPersona, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 250, 110, -1));
 
+        rbActivo.setSelected(true);
         rbActivo.setText("Activo");
         rbActivo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -189,12 +229,28 @@ public class frmRegistrarContacto extends javax.swing.JFrame {
     }
     
     private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
-        clsPersona p = asignarValoresContacto();
-        formularioListarContacto.lstPersonas.add(p);
+        if(persona==null){
+          registrarContacto();  
+        }else{
+            actualizarContacto();
+        }
         formularioListarContacto.cargarDatos();
-        JOptionPane.showMessageDialog(null, "SE REGISTRO CORRECTAMENTE!");
         this.dispose();
     }//GEN-LAST:event_btnRegistrarActionPerformed
+
+    private void actualizarContacto() {
+        clsPersona p = asignarValoresContacto();
+        formularioListarContacto.lstPersonas.set(indice,p);
+        formularioListarContacto.fichero.escribirFichero(formularioListarContacto.lstPersonas);
+        JOptionPane.showMessageDialog(null, "SE ACTUALIZO CORRECTAMENTE!");
+    }
+
+    private void registrarContacto() {
+        clsPersona p = asignarValoresContacto();
+        formularioListarContacto.lstPersonas.add(p);
+        formularioListarContacto.fichero.escribirFichero(formularioListarContacto.lstPersonas);
+        JOptionPane.showMessageDialog(null, "SE REGISTRO CORRECTAMENTE!");
+    }
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         dispose();

@@ -15,44 +15,12 @@ import java.util.HashSet;
 
 public class frmAgenda extends javax.swing.JFrame {
 
-   private ArrayList<clsPersona>lstPersonas = new ArrayList<clsPersona>();
-   
     public frmAgenda() {
        initComponents();
         setLocationRelativeTo(null);
-        lstPersonas = new ArrayList<clsPersona>();
-        cargarPersona();
     }
     
-    private void cargarPersona(){
-        clsPersona p = new clsPersona();
-        p.setAnio("1990");
-        p.setCelular("7878123");
-        p.setCodigo(5);
-        p.setDia("18");
-        p.setEmail("email");
-        p.setEstado('A');
-        p.setMes("1");
-        p.setNombre("Charlie");
-        p.setSexo('M');
-        p.setTelefonoFijo("23432432");
-        p.setTipoPersona("Alumno");
-        lstPersonas.add(p);
-        clsPersona pe = new clsPersona();
-        pe.setAnio("1890");
-        pe.setCelular("6568123");
-        pe.setCodigo(10);
-        pe.setDia("15");
-        pe.setEmail("email");
-        pe.setEstado('I');
-        pe.setMes("3");
-        pe.setNombre("Juan");
-        pe.setSexo('F');
-        pe.setTelefonoFijo("872345");
-        pe.setTipoPersona("Docente");
-        lstPersonas.add(pe);
-    }
-
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -98,7 +66,7 @@ public class frmAgenda extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnVerListaContactoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerListaContactoActionPerformed
-     frmListarContacto ventana = new frmListarContacto(lstPersonas);
+     frmListarContacto ventana = new frmListarContacto();
      ventana.setVisible(true);
     }//GEN-LAST:event_btnVerListaContactoActionPerformed
 

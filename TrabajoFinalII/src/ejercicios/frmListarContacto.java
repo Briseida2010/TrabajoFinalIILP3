@@ -19,20 +19,24 @@ public class frmListarContacto extends javax.swing.JFrame {
      * Creates new form frmListarContacto
      */
     public ArrayList<clsPersona> lstPersonas;
+    public clsFichero fichero;
 
-    public frmListarContacto(ArrayList<clsPersona> lstPersonas) {
+    public frmListarContacto() {
         initComponents();
         setLocationRelativeTo(null);
-        this.lstPersonas = lstPersonas;
+        fichero = new clsFichero();
+        this.lstPersonas = new ArrayList<clsPersona>();
         cargarDatos();
         cargarRadioButtons();
     }
+    
 
+    
     private void cargarRadioButtons() {
         buttonGroup1.add(rbCodigo);
         buttonGroup1.add(rbNombre);
     }
-       
+      
     private DefaultTableModel crearCabecerasTabla(){
         DefaultTableModel modelo = new DefaultTableModel();
         modelo.addColumn("Codigo");
@@ -56,10 +60,11 @@ public class frmListarContacto extends javax.swing.JFrame {
     
     public void cargarDatos() {
         DefaultTableModel modelo = crearCabecerasTabla();
+        lstPersonas = fichero.leerFichero();
         for (clsPersona p : lstPersonas) {
             crearFila(p,modelo);
         }
-        tablaRegistrar.setModel(modelo);
+        tablaRegistrar.setModel(modelo);     
     }
 
     public void buscarPorCodigo(String codigo) {
@@ -126,6 +131,7 @@ public class frmListarContacto extends javax.swing.JFrame {
             }
         });
 
+        rbCodigo.setSelected(true);
         rbCodigo.setText("Codigo");
         rbCodigo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -215,6 +221,7 @@ public class frmListarContacto extends javax.swing.JFrame {
         getContentPane().add(btnMostrarCumpleañosMes, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 360, 220, 30));
         getContentPane().add(txtMostrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 360, 130, 30));
 
+        rbMes.setSelected(true);
         rbMes.setText("Mes");
         getContentPane().add(rbMes, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 360, -1, -1));
 
@@ -229,8 +236,10 @@ public class frmListarContacto extends javax.swing.JFrame {
     }//GEN-LAST:event_btnNuevoActionPerformed
 
     private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
-
-        cargarDatos();
+        int filaSeleccionada = tablaRegistrar.getSelectedRow();
+        clsPersona p = lstPersonas.get(filaSeleccionada);
+        frmRegistrarContacto r = new frmRegistrarContacto(this,p,filaSeleccionada);
+        r.setVisible(true);
     }//GEN-LAST:event_btnActualizarActionPerformed
 
     private void rbCodigoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_rbCodigoKeyPressed
@@ -238,15 +247,18 @@ public class frmListarContacto extends javax.swing.JFrame {
     }//GEN-LAST:event_rbCodigoKeyPressed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-        if (rbCodigo.isSelected()) {
-            buscarPorCodigo(txtBuscar.getText());
-            
-        } else if (rbNombre.isSelected()) {
-            buscarPorNombre(txtBuscar.getText());
-        } else {
-           
+        if(txtBuscar.getText().equals("")){
             cargarDatos();
+        }else{
+           if (rbCodigo.isSelected()) {
+                buscarPorCodigo(txtBuscar.getText());    
+            } else if (rbNombre.isSelected()) {
+                buscarPorNombre(txtBuscar.getText());
+            } else {
+                cargarDatos();
+            } 
         }
+        
 
     }//GEN-LAST:event_btnBuscarActionPerformed
 
@@ -270,8 +282,11 @@ public class frmListarContacto extends javax.swing.JFrame {
         int filaseleccionada = tablaRegistrar.getSelectedRow();
         if(filaseleccionada>=0)
         {
-        filaseleccionada=JOptionPane.showConfirmDialog(null, "Esa seguro de eliminar");
-        lstPersonas.remove(filaseleccionada);
+            if(JOptionPane.showConfirmDialog(null, "Esa seguro de eliminar")==0){
+                lstPersonas.remove(filaseleccionada);
+                fichero.escribirFichero(lstPersonas);
+                cargarDatos();
+            }       
         }else{
         JOptionPane.showMessageDialog(null, "seleccione la fila");
         }

@@ -1,0 +1,2 @@
+1,Charlie,12345,950742954,htrdev@live.com,M,Alumno,A,18,1,1990
+2,BriseidaAA,4332452,940822922,briseida@hotmail.com,F,Docente,A,24,5,1987
